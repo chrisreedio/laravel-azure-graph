@@ -47,7 +47,7 @@ class GraphConnector extends Connector implements HasPagination
     {
         return new class(connector: $this, request: $request) extends CursorPaginator
         {
-			protected ?int $perPageLimit = config('azure-graph.pagination.limit');
+            protected ?int $perPageLimit = config('azure-graph.pagination.limit');
 
             protected function getNextCursor(Response $response): int|string
             {

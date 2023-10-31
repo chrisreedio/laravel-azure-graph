@@ -2,7 +2,7 @@
 
 // config for ChrisReedIO/AzureGraph
 return [
-	'pagination' => [
-		'limit' => 100,
-	],
+    'pagination' => [
+        'limit' => 100,
+    ],
 ];

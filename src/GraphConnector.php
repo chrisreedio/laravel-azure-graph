@@ -15,6 +15,11 @@ class GraphConnector extends Connector implements HasPagination
     use AcceptsJson;
 
     /**
+     * The default number of items per page
+     */
+    protected ?int $perPageLimit = null;
+
+    /**
      * The Base URL of the API
      */
     public function resolveBaseUrl(): string
@@ -41,13 +46,18 @@ class GraphConnector extends Connector implements HasPagination
     public function __construct(protected string $token)
     {
         $this->withTokenAuth($this->token);
+        $this->perPageLimit = config('azure-graph.pagination.limit');
     }
 
     public function paginate(Request $request): Paginator
     {
         return new class(connector: $this, request: $request) extends CursorPaginator
         {
-            protected ?int $perPageLimit = config('azure-graph.pagination.limit');
+            protected ?int $perPageLimit = 100;
+
+            public function __construct(protected GraphConnector $connector, protected Request $request)
+            {
+            }
 
             protected function getNextCursor(Response $response): int|string
             {
@@ -70,8 +80,10 @@ class GraphConnector extends Connector implements HasPagination
 
             protected function applyPagination(Request $request): Request
             {
-                if (isset($this->perPageLimit)) {
-                    $request->query()->add('$top', $this->perPageLimit);
+                $configPerPageLimit = config('azure-graph.pagination.limit');
+                $pageLimit = $configPerPageLimit ?? $this->perPageLimit;
+                if ($pageLimit) {
+                    $request->query()->add('$top', $pageLimit);
                 }
 
                 if ($this->currentResponse instanceof Response) {

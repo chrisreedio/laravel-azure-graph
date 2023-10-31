@@ -38,48 +38,49 @@ class GraphConnector extends Connector implements HasPagination
         return [];
     }
 
-	public function  __construct(protected string $token)
-	{
-		$this->withTokenAuth($this->token);
-	}
+    public function __construct(protected string $token)
+    {
+        $this->withTokenAuth($this->token);
+    }
 
-	public function paginate(Request $request): Paginator
-	{
-		return new class(connector: $this, request: $request) extends CursorPaginator
+    public function paginate(Request $request): Paginator
+    {
+        return new class(connector: $this, request: $request) extends CursorPaginator
         {
-			protected ?int $perPageLimit = 100;
+            protected ?int $perPageLimit = 100;
 
             protected function getNextCursor(Response $response): int|string
             {
-				$nextLink = (string)$response->json('@odata.nextLink');
-				// Get the token off the end
-				$token = explode('skiptoken=', $nextLink)[1];
+                $nextLink = (string) $response->json('@odata.nextLink');
+                // Get the token off the end
+                $token = explode('skiptoken=', $nextLink)[1];
+
                 return $token;
             }
-        
+
             protected function isLastPage(Response $response): bool
             {
                 return is_null($response->json('@odata.nextLink'));
             }
-            
+
             protected function getPageItems(Response $response, Request $request): array
             {
-                return (array)$response->json('value');
+                return (array) $response->json('value');
             }
 
-			protected function applyPagination(Request $request): Request
-			{
-				if (isset($this->perPageLimit)) {
-					$request->query()->add('$top', $this->perPageLimit);
-				}
+            protected function applyPagination(Request $request): Request
+            {
+                if (isset($this->perPageLimit)) {
+                    $request->query()->add('$top', $this->perPageLimit);
+                }
 
-				if ($this->currentResponse instanceof Response) {
-					$token = $this->getNextCursor($this->currentResponse);
-					$request->query()->add('$skiptoken', $token);
-				}
-				
-				return $request;
-			}
+                if ($this->currentResponse instanceof Response) {
+                    $token = $this->getNextCursor($this->currentResponse);
+                    $request->query()->add('$skiptoken', $token);
+                }
+
+                return $request;
+            }
         };
-	}
+    }
 }

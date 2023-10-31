@@ -8,6 +8,5 @@ use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 abstract class AzureGraphRequest extends Request implements Paginatable
 {
-	protected Method $method = Method::GET;
-
+    protected Method $method = Method::GET;
 }

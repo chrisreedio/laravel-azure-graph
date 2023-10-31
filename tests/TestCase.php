@@ -2,9 +2,9 @@
 
 namespace ChrisReedIO\AzureGraph\Tests;
 
+use ChrisReedIO\AzureGraph\AzureGraphServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use ChrisReedIO\AzureGraph\AzureGraphServiceProvider;
 
 class TestCase extends Orchestra
 {

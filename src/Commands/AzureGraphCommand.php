@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace ChrisReedIO\AzureGraph\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class AzureGraphCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-azure-graph';
 
     public $description = 'My command';
 

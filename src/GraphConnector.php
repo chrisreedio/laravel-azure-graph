@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Integrations\AzureGraph;
+namespace ChrisReedIO\AzureGraph;
 
 use Saloon\Http\Connector;
 use Saloon\Http\Request;

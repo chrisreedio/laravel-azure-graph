@@ -2,9 +2,9 @@
 
 namespace ChrisReedIO\AzureGraph;
 
+use ChrisReedIO\AzureGraph\Commands\AzureGraphCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use ChrisReedIO\AzureGraph\Commands\AzureGraphCommand;
 
 class AzureGraphServiceProvider extends PackageServiceProvider
 {

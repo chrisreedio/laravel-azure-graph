@@ -18,8 +18,8 @@ class AzureGraphServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-azure-graph')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel-azure-graph_table')
+            // ->hasViews()
+            // ->hasMigration('create_laravel-azure-graph_table')
             ->hasCommand(AzureGraphCommand::class);
     }
 }

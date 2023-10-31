@@ -6,7 +6,10 @@ use ChrisReedIO\AzureGraph\Requests\AzureGraphRequest;
 
 class MemberOfRequest extends AzureGraphRequest
 {
-    public function __construct(protected string $userId)
+    /**
+     * @param  null|string  $userId If null, the request will be made for the current user
+     */
+    public function __construct(protected ?string $userId = null)
     {
     }
 

@@ -55,10 +55,6 @@ class GraphConnector extends Connector implements HasPagination
         {
             protected ?int $perPageLimit = 100;
 
-            public function __construct(protected GraphConnector $connector, protected Request $request)
-            {
-            }
-
             protected function getNextCursor(Response $response): int|string
             {
                 $nextLink = (string) $response->json('@odata.nextLink');

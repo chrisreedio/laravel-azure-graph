@@ -7,6 +7,13 @@
 
 Provides an interface to the Azure Graph API.
 
+> [!WARNING]  
+> This package is still in development and is not ready for production use.
+> 
+> It currently only supports delegated authentication via a user supplied token.
+> 
+> The only call supported is to fetch a user's groups via the `memberOf` endpoint.
+
 ## Installation
 
 You can install the package via composer:
@@ -14,6 +21,20 @@ You can install the package via composer:
 ```bash
 composer require chrisreedio/laravel-azure-graph
 ```
+## Usage
+
+This sample shows how to get all of a user's groups via a delegated call to the `memberOf` endpoint.
+
+```php
+$graph = new GraphConnector('user-token');
+$paginator = $graph->paginate(new MemberOfRequest());
+$adGroups = $paginator->collect();
+
+// Dump the user's groups
+dd($adGroups->pluck('displayName')->all());
+```
+
+## Config
 
 You can publish the config file with:
 
@@ -29,15 +50,6 @@ return [
         'limit' => 100,
     ],
 ];
-```
-
-## Usage
-
-TODO - This is a work in progress.
-
-```php
-$azureGraph = new ChrisReedIO\AzureGraph();
-echo $azureGraph->echoPhrase('Hello, ChrisReedIO!');
 ```
 
 ## Testing

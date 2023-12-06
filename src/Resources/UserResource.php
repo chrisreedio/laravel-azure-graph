@@ -2,6 +2,7 @@
 
 namespace ChrisReedIO\AzureGraph\Resources;
 
+use ChrisReedIO\AzureGraph\Data\Groups\GroupData;
 use ChrisReedIO\AzureGraph\Data\Users\UserData;
 use ChrisReedIO\AzureGraph\Requests\Users\Group\MemberOfRequest;
 use ChrisReedIO\AzureGraph\Requests\Users\User\GetUser;
@@ -18,10 +19,14 @@ class UserResource extends GraphResource
         return $this->connector->paginate(new UserDelta())->collect();
     }
 
-    public function groups()
+    /**
+     * @param string|null $id If null, the request will be made for the current user
+     *  (Will fail if performing a non-delegated call)
+     * @return LazyCollection<GroupData>
+     */
+    public function groups(string $id = null) : LazyCollection
     {
-        $response = $this->connector->send(new MemberOfRequest());
-        return $response->json();
+        return $this->connector->paginate(new MemberOfRequest($id))->collect();
     }
 
     public function get(string $id) : ?UserData

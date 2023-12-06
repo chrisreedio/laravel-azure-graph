@@ -5,6 +5,7 @@ namespace ChrisReedIO\AzureGraph\Data\Groups;
 readonly class GroupData
 {
     const TYPE = '#microsoft.graph.group';
+
     public function __construct(
         public ?string $id,
         public ?string $deletedDateTime,

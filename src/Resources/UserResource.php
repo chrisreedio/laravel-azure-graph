@@ -20,16 +20,16 @@ class UserResource extends GraphResource
     }
 
     /**
-     * @param string|null $id If null, the request will be made for the current user
+     * @param  string|null  $id If null, the request will be made for the current user
      *  (Will fail if performing a non-delegated call)
      * @return LazyCollection<GroupData>
      */
-    public function groups(string $id = null) : LazyCollection
+    public function groups(?string $id = null): LazyCollection
     {
         return $this->connector->paginate(new MemberOfRequest($id))->collect();
     }
 
-    public function get(string $id) : ?UserData
+    public function get(string $id): ?UserData
     {
         return $this->connector->send(new GetUser($id))->dtoOrFail();
     }

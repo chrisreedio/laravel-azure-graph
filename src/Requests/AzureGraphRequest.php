@@ -6,7 +6,7 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
 
-abstract class AzureGraphRequest extends Request implements Paginatable
+abstract class AzureGraphRequest extends Request
 {
     protected Method $method = Method::GET;
 }

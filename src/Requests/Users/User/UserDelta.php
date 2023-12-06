@@ -4,7 +4,6 @@ namespace ChrisReedIO\AzureGraph\Requests\Users\User;
 
 use ChrisReedIO\AzureGraph\Data\Users\UserData;
 use ChrisReedIO\AzureGraph\Requests\AzureGraphRequest;
-use Illuminate\Support\LazyCollection;
 use JsonException;
 use Saloon\Http\Response;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
@@ -39,12 +38,13 @@ class UserDelta extends AzureGraphRequest implements Paginatable
 
     /**
      * @return array<UserData>
+     *
      * @throws JsonException
      */
     public function createDtoFromResponse(Response $response): array
     {
         return collect($response->json('value'))
-            ->map(fn($user) => UserData::fromArray($user))
+            ->map(fn ($user) => UserData::fromArray($user))
             ->all();
     }
 }

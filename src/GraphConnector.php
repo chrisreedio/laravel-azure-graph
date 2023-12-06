@@ -3,7 +3,6 @@
 namespace ChrisReedIO\AzureGraph;
 
 use ChrisReedIO\AzureGraph\Resources\UserResource;
-use ReflectionException;
 use Saloon\Exceptions\OAuthConfigValidationException;
 use Saloon\Helpers\OAuth2\OAuthConfig;
 use Saloon\Http\Connector;
@@ -15,13 +14,14 @@ use Saloon\PaginationPlugin\Paginator;
 use Saloon\Traits\OAuth2\ClientCredentialsGrant;
 use Saloon\Traits\Plugins\AcceptsJson;
 use Throwable;
+
 use function config;
 use function dd;
 
 class GraphConnector extends Connector implements HasPagination
 {
-    use ClientCredentialsGrant;
     use AcceptsJson;
+    use ClientCredentialsGrant;
 
     /**
      * The default number of items per page
@@ -64,7 +64,7 @@ class GraphConnector extends Connector implements HasPagination
                 $authenticator = $this->getAccessToken();
                 $this->authenticate($authenticator);
             } catch (Throwable $e) {
-                throw new \Exception('Athena SDK failed to authenticate: ' . $e->getMessage());
+                throw new \Exception('Athena SDK failed to authenticate: '.$e->getMessage());
             }
         }
         $this->perPageLimit = config('azure-graph.pagination.limit');
@@ -73,10 +73,11 @@ class GraphConnector extends Connector implements HasPagination
     protected function defaultOauthConfig(): OAuthConfig
     {
         $tenantId = config('services.azure.tenant_id') ?? config('services.azure.tenant');
-        if (!$tenantId) {
+        if (! $tenantId) {
             throw new OAuthConfigValidationException('No tenant ID provided.');
         }
-        $loginUrl = $this->loginBaseUrl . '/' . $tenantId . '/oauth2/v2.0/token';
+        $loginUrl = $this->loginBaseUrl.'/'.$tenantId.'/oauth2/v2.0/token';
+
         return OAuthConfig::make()
             ->setClientId(config('services.azure.client_id'))
             ->setClientSecret(config('services.azure.client_secret'))
@@ -86,12 +87,13 @@ class GraphConnector extends Connector implements HasPagination
 
     public function paginate(Request $request): Paginator
     {
-        return new class(connector: $this, request: $request) extends CursorPaginator {
+        return new class(connector: $this, request: $request) extends CursorPaginator
+        {
             protected ?int $perPageLimit = 500;
 
             protected function getNextCursor(Response $response): int|string
             {
-                $nextLink = (string)$response->json('@odata.nextLink');
+                $nextLink = (string) $response->json('@odata.nextLink');
                 // Get the token off the end
                 $token = explode('skiptoken=', $nextLink)[1];
 

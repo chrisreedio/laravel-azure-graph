@@ -39,5 +39,4 @@ readonly class UserData
             userType: $data['userType'] ?? null,
         );
     }
-
 }

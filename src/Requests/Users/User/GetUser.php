@@ -9,18 +9,16 @@ use Saloon\Http\Response;
 class GetUser extends AzureGraphRequest
 {
     /**
-     * @param string $id The ID (or user principal name) of the user to retrieve
+     * @param  string  $id The ID (or user principal name) of the user to retrieve
      */
     public function __construct(
         protected string $id,
     ) {
     }
 
-
-
     public function resolveEndpoint(): string
     {
-        return '/users/' . $this->id;
+        return '/users/'.$this->id;
     }
 
     public function defaultQuery(): array
@@ -44,7 +42,7 @@ class GetUser extends AzureGraphRequest
         ];
     }
 
-    public function createDtoFromResponse(Response $response) : UserData
+    public function createDtoFromResponse(Response $response): UserData
     {
         return UserData::fromArray($response->json());
     }

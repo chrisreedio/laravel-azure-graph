@@ -21,10 +21,11 @@ class UserResource extends GraphResource
     public function groups()
     {
         $response = $this->connector->send(new MemberOfRequest());
+
         return $response->json();
     }
 
-    public function get(string $id) : ?UserData
+    public function get(string $id): ?UserData
     {
         return $this->connector->send(new GetUser($id))->dtoOrFail();
     }

@@ -17,5 +17,5 @@ return [
                 // 'permissions' => 'azure-graph.deltas.permissions',
             ],
         ],
-    ]
+    ],
 ];

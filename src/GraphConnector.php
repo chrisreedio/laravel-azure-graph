@@ -2,22 +2,33 @@
 
 namespace ChrisReedIO\AzureGraph;
 
+use ChrisReedIO\AzureGraph\Resources\UserResource;
+use Saloon\Exceptions\OAuthConfigValidationException;
+use Saloon\Helpers\OAuth2\OAuthConfig;
 use Saloon\Http\Connector;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\PaginationPlugin\Contracts\HasPagination;
 use Saloon\PaginationPlugin\CursorPaginator;
 use Saloon\PaginationPlugin\Paginator;
+use Saloon\Traits\OAuth2\ClientCredentialsGrant;
 use Saloon\Traits\Plugins\AcceptsJson;
+use Throwable;
+
+use function config;
+use function dd;
 
 class GraphConnector extends Connector implements HasPagination
 {
     use AcceptsJson;
+    use ClientCredentialsGrant;
 
     /**
      * The default number of items per page
      */
     protected ?int $perPageLimit = null;
+
+    protected ?string $loginBaseUrl = 'https://login.microsoftonline.com';
 
     /**
      * The Base URL of the API
@@ -43,17 +54,42 @@ class GraphConnector extends Connector implements HasPagination
         return [];
     }
 
-    public function __construct(protected string $token)
+    public function __construct(protected ?string $token = null)
     {
-        $this->withTokenAuth($this->token);
+        if ($token) {
+            $this->withTokenAuth($this->token);
+        } else {
+            // Attempt to set up authentication
+            try {
+                $authenticator = $this->getAccessToken();
+                $this->authenticate($authenticator);
+            } catch (Throwable $e) {
+                throw new \Exception('Athena SDK failed to authenticate: '.$e->getMessage());
+            }
+        }
         $this->perPageLimit = config('azure-graph.pagination.limit');
+    }
+
+    protected function defaultOauthConfig(): OAuthConfig
+    {
+        $tenantId = config('services.azure.tenant_id') ?? config('services.azure.tenant');
+        if (! $tenantId) {
+            throw new OAuthConfigValidationException('No tenant ID provided.');
+        }
+        $loginUrl = $this->loginBaseUrl.'/'.$tenantId.'/oauth2/v2.0/token';
+
+        return OAuthConfig::make()
+            ->setClientId(config('services.azure.client_id'))
+            ->setClientSecret(config('services.azure.client_secret'))
+            ->setTokenEndpoint($loginUrl)
+            ->setDefaultScopes(['https://graph.microsoft.com/.default']);
     }
 
     public function paginate(Request $request): Paginator
     {
         return new class(connector: $this, request: $request) extends CursorPaginator
         {
-            protected ?int $perPageLimit = 100;
+            protected ?int $perPageLimit = 500;
 
             protected function getNextCursor(Response $response): int|string
             {
@@ -71,7 +107,19 @@ class GraphConnector extends Connector implements HasPagination
 
             protected function getPageItems(Response $response, Request $request): array
             {
-                return (array) $response->json('value');
+                // return (array)$response->json('value');
+                try {
+                    $dtoResult = $response->dtoOrFail();
+                } catch (Throwable $e) {
+                    // throw new \Exception(class_basename($request).' failed to parse response body as JSON: '.$e->getMessage());
+                    dd($e->getMessage());
+                }
+                if (! $dtoResult) {
+                    return $response->json('value');
+                    // throw new \Exception('Failed to parse response body as JSON.');
+                }
+
+                return $dtoResult;
             }
 
             protected function applyPagination(Request $request): Request
@@ -91,4 +139,11 @@ class GraphConnector extends Connector implements HasPagination
             }
         };
     }
+
+    // Resources
+    public function users(): UserResource
+    {
+        return new UserResource($this);
+    }
+    // End Resources
 }

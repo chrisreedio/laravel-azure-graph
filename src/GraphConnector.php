@@ -16,7 +16,6 @@ use Saloon\Traits\Plugins\AcceptsJson;
 use Throwable;
 
 use function config;
-use function dd;
 
 class GraphConnector extends Connector implements HasPagination
 {
@@ -112,7 +111,6 @@ class GraphConnector extends Connector implements HasPagination
                     $dtoResult = $response->dtoOrFail();
                 } catch (Throwable $e) {
                     // throw new \Exception(class_basename($request).' failed to parse response body as JSON: '.$e->getMessage());
-                    dd($e->getMessage());
                 }
                 if (! $dtoResult) {
                     return $response->json('value');

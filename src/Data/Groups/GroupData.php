@@ -40,8 +40,7 @@ readonly class GroupData
         public ?string $visibility,
         public ?array $onPremisesProvisioningErrors,
         public ?array $serviceProvisioningErrors
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {

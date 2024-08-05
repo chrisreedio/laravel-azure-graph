@@ -10,6 +10,5 @@ abstract class GraphResource
 {
     public function __construct(
         protected GraphConnector $connector,
-    ) {
-    }
+    ) {}
 }

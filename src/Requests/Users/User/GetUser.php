@@ -9,12 +9,11 @@ use Saloon\Http\Response;
 class GetUser extends AzureGraphRequest
 {
     /**
-     * @param  string  $id The ID (or user principal name) of the user to retrieve
+     * @param  string  $id  The ID (or user principal name) of the user to retrieve
      */
     public function __construct(
         protected string $id,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

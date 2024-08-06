@@ -10,11 +10,9 @@ use Saloon\PaginationPlugin\Contracts\Paginatable;
 class MemberOfRequest extends AzureGraphRequest implements Paginatable
 {
     /**
-     * @param  null|string  $userId If null, the request will be made for the current user
+     * @param  null|string  $userId  If null, the request will be made for the current user
      */
-    public function __construct(protected ?string $userId = null)
-    {
-    }
+    public function __construct(protected ?string $userId = null) {}
 
     public function resolveEndpoint(): string
     {

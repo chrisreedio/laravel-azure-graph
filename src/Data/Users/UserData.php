@@ -18,8 +18,7 @@ readonly class UserData
         public ?string $jobTitle = null,
         public ?string $officeLocation = null,
         public ?string $userType = null,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {

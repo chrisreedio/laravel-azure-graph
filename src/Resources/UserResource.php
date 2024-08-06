@@ -16,12 +16,12 @@ class UserResource extends GraphResource
      */
     public function deltas(): LazyCollection
     {
-        return $this->connector->paginate(new UserDelta())->collect();
+        return $this->connector->paginate(new UserDelta)->collect();
     }
 
     /**
-     * @param  string|null  $id If null, the request will be made for the current user
-     *  (Will fail if performing a non-delegated call)
+     * @param  string|null  $id  If null, the request will be made for the current user
+     *                           (Will fail if performing a non-delegated call)
      * @return LazyCollection<GroupData>
      */
     public function groups(?string $id = null): LazyCollection

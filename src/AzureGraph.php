@@ -2,6 +2,4 @@
 
 namespace ChrisReedIO\AzureGraph;
 
-class AzureGraph
-{
-}
+class AzureGraph {}

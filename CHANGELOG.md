@@ -2,6 +2,17 @@
 
 All notable changes to `laravel-azure-graph` will be documented in this file.
 
+## v0.1.0 - 2024-08-06
+
+### What's Changed
+
+* User Deltas & User Get by @chrisreedio in https://github.com/chrisreedio/laravel-azure-graph/pull/7
+* Bump aglipanci/laravel-pint-action from 2.3.0 to 2.3.1 by @dependabot in https://github.com/chrisreedio/laravel-azure-graph/pull/9
+* Bump aglipanci/laravel-pint-action from 2.3.1 to 2.4 by @dependabot in https://github.com/chrisreedio/laravel-azure-graph/pull/12
+* User Deltas by @chrisreedio in https://github.com/chrisreedio/laravel-azure-graph/pull/8
+
+**Full Changelog**: https://github.com/chrisreedio/laravel-azure-graph/compare/v0.0.2...v0.1.0
+
 ## v0.0.2 - 2023-11-03
 
 ### What's Changed

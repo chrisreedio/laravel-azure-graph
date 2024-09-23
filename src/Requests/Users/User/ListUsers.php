@@ -41,6 +41,7 @@ class ListUsers extends AzureGraphRequest implements Paginatable
     public function createDtoFromResponse(Response $response): UserData
     {
         dd($response->json());
+
         return UserData::fromArray($response->json());
     }
 }

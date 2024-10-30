@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-azure-graph` will be documented in this file.
 
+## v0.2.0 - 2024-10-30
+
+### What's Changed
+
+* Added Managers Fetch by @chrisreedio in https://github.com/chrisreedio/laravel-azure-graph/pull/15
+
+**Full Changelog**: https://github.com/chrisreedio/laravel-azure-graph/compare/v0.1.0...v0.2.0
+
 ## v0.1.0 - 2024-08-06
 
 ### What's Changed

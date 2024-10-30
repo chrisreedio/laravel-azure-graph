@@ -22,7 +22,7 @@ class UserResource extends GraphResource
     }
 
     /**
-     * @param string|null $id If null, the request will be made for the current user
+     * @param  string|null  $id  If null, the request will be made for the current user
      *                           (Will fail if performing a non-delegated call)
      * @return LazyCollection<GroupData>
      */
@@ -45,5 +45,4 @@ class UserResource extends GraphResource
     {
         return $this->connector->send(new ListDirectReports($id));
     }
-
 }

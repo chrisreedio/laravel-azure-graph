@@ -11,7 +11,7 @@ use function implode;
 class GetManager extends AzureGraphRequest
 {
     /**
-     * @param string $id The ID (or user principal name) of the user to retrieve
+     * @param  string  $id  The ID (or user principal name) of the user to retrieve
      */
     public function __construct(
         protected string $id,
@@ -34,22 +34,22 @@ class GetManager extends AzureGraphRequest
     {
         return [
             '$expand' => 'manager($levels='.$this->levels.';$select='.implode(',', [
-                    'id',
-                    'userPrincipalName',
-                    'displayName',
-                    'givenName',
-                    'surname',
-                    'mobilePhone',
-                    'businessPhones',
-                    'mail',
-                    'department',
-                    'companyName',
-                    'jobTitle',
-                    'city',
-                    'officeLocation',
-                    'userType',
-                    'employeeId',
-                ]).')',
+                'id',
+                'userPrincipalName',
+                'displayName',
+                'givenName',
+                'surname',
+                'mobilePhone',
+                'businessPhones',
+                'mail',
+                'department',
+                'companyName',
+                'jobTitle',
+                'city',
+                'officeLocation',
+                'userType',
+                'employeeId',
+            ]).')',
             '$select' => implode(',', [
                 'id',
                 'userPrincipalName',

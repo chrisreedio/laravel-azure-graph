@@ -6,6 +6,8 @@ use ChrisReedIO\AzureGraph\Data\Groups\GroupData;
 use ChrisReedIO\AzureGraph\Data\Users\UserData;
 use ChrisReedIO\AzureGraph\Requests\Users\Group\MemberOfRequest;
 use ChrisReedIO\AzureGraph\Requests\Users\User\GetUser;
+use ChrisReedIO\AzureGraph\Requests\Users\User\Hierarchy\GetManager;
+use ChrisReedIO\AzureGraph\Requests\Users\User\Hierarchy\ListDirectReports;
 use ChrisReedIO\AzureGraph\Requests\Users\User\UserDelta;
 use Illuminate\Support\LazyCollection;
 
@@ -32,5 +34,15 @@ class UserResource extends GraphResource
     public function get(string $id): ?UserData
     {
         return $this->connector->send(new GetUser($id))->dtoOrFail();
+    }
+
+    public function managers(string $id): \Saloon\Http\Response
+    {
+        return $this->connector->send(new GetManager($id));
+    }
+
+    public function directReports(string $id): \Saloon\Http\Response
+    {
+        return $this->connector->send(new ListDirectReports($id));
     }
 }

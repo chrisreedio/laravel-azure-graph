@@ -2,6 +2,8 @@
 
 namespace ChrisReedIO\AzureGraph\Data\Users;
 
+use function array_key_exists;
+
 readonly class UserData
 {
     public function __construct(
@@ -18,6 +20,8 @@ readonly class UserData
         public ?string $jobTitle = null,
         public ?string $officeLocation = null,
         public ?string $userType = null,
+        public ?string $employeeId = null,
+        public ?UserData $manager = null,
     ) {}
 
     public static function fromArray(array $data): self
@@ -36,6 +40,8 @@ readonly class UserData
             jobTitle: $data['jobTitle'] ?? null,
             officeLocation: $data['officeLocation'] ?? null,
             userType: $data['userType'] ?? null,
+            employeeId: $data['employeeId'] ?? null,
+            manager: array_key_exists('manager', $data) ? self::fromArray($data['manager']) : null,
         );
     }
 }

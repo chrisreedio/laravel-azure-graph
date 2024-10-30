@@ -1,27 +1,39 @@
 <?php
 
-namespace ChrisReedIO\AzureGraph\Requests\Users\User;
+namespace ChrisReedIO\AzureGraph\Requests\Users\User\Hierarchy;
 
 use ChrisReedIO\AzureGraph\Data\Users\UserData;
 use ChrisReedIO\AzureGraph\Requests\AzureGraphRequest;
 use Saloon\Http\Response;
-use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 use function implode;
 
-class ListUsers extends AzureGraphRequest implements Paginatable
+class GetManager extends AzureGraphRequest
 {
-    public function __construct() {}
+    /**
+     * @param string $id The ID (or user principal name) of the user to retrieve
+     */
+    public function __construct(
+        protected string $id,
+        protected string $levels = 'max',
+    ) {}
 
     public function resolveEndpoint(): string
     {
-        return '/users';
+        return '/users/'.$this->id;
+    }
+
+    protected function defaultHeaders(): array
+    {
+        return [
+            'ConsistencyLevel' => 'eventual',
+        ];
     }
 
     public function defaultQuery(): array
     {
         return [
-            '$expand' => 'manager($select='.implode(',', [
+            '$expand' => 'manager($levels='.$this->levels.';$select='.implode(',', [
                     'id',
                     'userPrincipalName',
                     'displayName',
@@ -56,32 +68,10 @@ class ListUsers extends AzureGraphRequest implements Paginatable
                 'employeeId',
             ]),
         ];
-        // return [
-        //     '$select' => implode(',', [
-        //         'id',
-        //         'userPrincipalName',
-        //         'displayName',
-        //         'givenName',
-        //         'surname',
-        //         'mobilePhone',
-        //         'businessPhones',
-        //         'mail',
-        //         'department',
-        //         'companyName',
-        //         'jobTitle',
-        //         'officeLocation',
-        //         'userType',
-        //         'EmployeeID',
-        //     ]),
-        // ];
     }
 
-    public function createDtoFromResponse(Response $response): array
+    public function createDtoFromResponse(Response $response): UserData
     {
-        // dd($response->json());
-
-        // return UserData::fromArray($response->json());
-        return collect($response->json('value'))
-            ->map(fn ($user) => UserData::fromArray($user))->toArray();
+        return UserData::fromArray($response->json());
     }
 }

@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-azure-graph` will be documented in this file.
 
+## v0.2.1 - 2024-11-04
+
+### What's Changed
+
+* feat: added GetUserByEmployeeId request for employee lookup by @chrisreedio in https://github.com/chrisreedio/laravel-azure-graph/pull/16
+
+**Full Changelog**: https://github.com/chrisreedio/laravel-azure-graph/compare/v0.2.0...v0.2.1
+
 ## v0.2.0 - 2024-10-30
 
 ### What's Changed

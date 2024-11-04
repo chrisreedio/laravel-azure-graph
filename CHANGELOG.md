@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-azure-graph` will be documented in this file.
 
+## v0.2.3 - 2024-11-04
+
+### What's Changed
+
+* 🔧 fix: changed return type of `getByEmployeeId` to `array` by @chrisreedio in https://github.com/chrisreedio/laravel-azure-graph/pull/18
+
+**Full Changelog**: https://github.com/chrisreedio/laravel-azure-graph/compare/v0.2.2...v0.2.3
+
 ## v0.2.2 - 2024-11-04
 
 ### What's Changed

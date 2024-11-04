@@ -37,7 +37,7 @@ class UserResource extends GraphResource
         return $this->connector->send(new GetUser($id))->dtoOrFail();
     }
 
-    public function getByEmployeeId(string $employeeId): ?UserData
+    public function getByEmployeeId(string $employeeId): array
     {
         return $this->connector->send(new GetUserByEmployeeId($employeeId))->dtoOrFail();
     }

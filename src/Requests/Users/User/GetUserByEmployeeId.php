@@ -24,6 +24,7 @@ class GetUserByEmployeeId extends AzureGraphRequest implements Paginatable
             '$filter' => "employeeId eq '{$this->employeeId}'",
             '$expand' => 'manager($select='.implode(',', [
                 'id',
+                'accountEnabled',
                 'userPrincipalName',
                 'displayName',
                 'givenName',
@@ -41,6 +42,7 @@ class GetUserByEmployeeId extends AzureGraphRequest implements Paginatable
             ]).')',
             '$select' => implode(',', [
                 'id',
+                'accountEnabled',
                 'userPrincipalName',
                 'displayName',
                 'givenName',

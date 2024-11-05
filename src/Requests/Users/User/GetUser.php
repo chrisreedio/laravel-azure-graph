@@ -25,6 +25,7 @@ class GetUser extends AzureGraphRequest
         return [
             '$select' => implode(',', [
                 'id',
+                'accountEnabled',
                 'userPrincipalName',
                 'displayName',
                 'givenName',

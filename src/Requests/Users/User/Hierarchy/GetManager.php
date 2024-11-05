@@ -35,6 +35,7 @@ class GetManager extends AzureGraphRequest
         return [
             '$expand' => 'manager($levels='.$this->levels.';$select='.implode(',', [
                 'id',
+                'accountEnabled',
                 'userPrincipalName',
                 'displayName',
                 'givenName',
@@ -52,6 +53,7 @@ class GetManager extends AzureGraphRequest
             ]).')',
             '$select' => implode(',', [
                 'id',
+                'accountEnabled',
                 'userPrincipalName',
                 'displayName',
                 'givenName',

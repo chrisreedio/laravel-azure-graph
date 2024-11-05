@@ -20,6 +20,7 @@ class UserDelta extends AzureGraphRequest implements Paginatable
         return [
             '$select' => implode(',', [
                 'id',
+                'accountEnabled',
                 'userPrincipalName',
                 'displayName',
                 'givenName',

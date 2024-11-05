@@ -23,6 +23,7 @@ class ListUsers extends AzureGraphRequest implements Paginatable
         return [
             '$expand' => 'manager($select='.implode(',', [
                 'id',
+                'accountEnabled',
                 'userPrincipalName',
                 'displayName',
                 'givenName',
@@ -40,6 +41,7 @@ class ListUsers extends AzureGraphRequest implements Paginatable
             ]).')',
             '$select' => implode(',', [
                 'id',
+                'accountEnabled',
                 'userPrincipalName',
                 'displayName',
                 'givenName',

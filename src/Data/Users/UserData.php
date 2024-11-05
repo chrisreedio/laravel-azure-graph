@@ -8,6 +8,7 @@ readonly class UserData
 {
     public function __construct(
         public ?string $id = null,
+        public ?bool $accountEnabled = null,
         public ?string $userPrincipalName = null,
         public ?string $displayName = null,
         public ?string $givenName = null,
@@ -28,6 +29,7 @@ readonly class UserData
     {
         return new self(
             id: $data['id'] ?? null,
+            accountEnabled: $data['accountEnabled'] ?? null,
             userPrincipalName: $data['userPrincipalName'] ?? null,
             displayName: $data['displayName'] ?? null,
             givenName: $data['givenName'] ?? null,

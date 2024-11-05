@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-azure-graph` will be documented in this file.
 
+## v0.3.0 - 2024-11-05
+
+### What's Changed
+
+* ✨ feat: added `accountEnabled` field to user data and requests by @chrisreedio in https://github.com/chrisreedio/laravel-azure-graph/pull/19
+
+**Full Changelog**: https://github.com/chrisreedio/laravel-azure-graph/compare/v0.2.3...v0.3.0
+
 ## v0.2.3 - 2024-11-04
 
 ### What's Changed

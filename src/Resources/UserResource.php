@@ -11,6 +11,7 @@ use ChrisReedIO\AzureGraph\Requests\Users\User\Hierarchy\GetManager;
 use ChrisReedIO\AzureGraph\Requests\Users\User\Hierarchy\ListDirectReports;
 use ChrisReedIO\AzureGraph\Requests\Users\User\UserDelta;
 use Illuminate\Support\LazyCollection;
+use Saloon\Http\Response;
 
 class UserResource extends GraphResource
 {
@@ -42,12 +43,12 @@ class UserResource extends GraphResource
         return $this->connector->send(new GetUserByEmployeeId($employeeId))->dtoOrFail();
     }
 
-    public function managers(string $id): \Saloon\Http\Response
+    public function managers(string $id): Response
     {
         return $this->connector->send(new GetManager($id));
     }
 
-    public function directReports(string $id): \Saloon\Http\Response
+    public function directReports(string $id): Response
     {
         return $this->connector->send(new ListDirectReports($id));
     }

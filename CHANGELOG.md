@@ -2,6 +2,16 @@
 
 All notable changes to `laravel-azure-graph` will be documented in this file.
 
+## v1.0.0 - 2026-06-04
+
+### What's Changed
+
+* Chore/saloon-v4 by @chrisreedio in https://github.com/chrisreedio/laravel-azure-graph/pull/20
+* Bump ramsey/composer-install from 2 to 3 by @dependabot[bot] in https://github.com/chrisreedio/laravel-azure-graph/pull/10
+* Bump dependabot/fetch-metadata from 1.6.0 to 2.2.0 by @dependabot[bot] in https://github.com/chrisreedio/laravel-azure-graph/pull/14
+
+**Full Changelog**: https://github.com/chrisreedio/laravel-azure-graph/compare/v0.3.0...v1.0.0
+
 ## v0.3.0 - 2024-11-05
 
 ### What's Changed

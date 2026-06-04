@@ -17,10 +17,12 @@
     ],
     "require": {
         "php": "^8.2",
-        "saloonphp/laravel-plugin": "^3.0",
-        "saloonphp/pagination-plugin": "^2.0",
-        "saloonphp/saloon": "^3.0",
+        "saloonphp/pagination-plugin": "^2.3",
+        "saloonphp/saloon": "^3.0 || ^4.0",
         "spatie/laravel-package-tools": "^1.15.0"
+    },
+    "suggest": {
+        "saloonphp/laravel-plugin": "Install the Saloon Laravel plugin version compatible with your application if you need Saloon's Laravel integrations."
     },
     "require-dev": {
         "dereuromark/composer-prefer-lowest": "^0.1.10",

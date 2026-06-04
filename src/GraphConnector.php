@@ -5,6 +5,7 @@ namespace ChrisReedIO\AzureGraph;
 use ChrisReedIO\AzureGraph\Resources\UserResource;
 use Saloon\Exceptions\OAuthConfigValidationException;
 use Saloon\Helpers\OAuth2\OAuthConfig;
+use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -56,7 +57,7 @@ class GraphConnector extends Connector implements HasPagination
     public function __construct(protected ?string $token = null)
     {
         if ($token) {
-            $this->withTokenAuth($this->token);
+            $this->authenticate(new TokenAuthenticator($this->token));
         } else {
             // Attempt to set up authentication
             try {
@@ -77,11 +78,17 @@ class GraphConnector extends Connector implements HasPagination
         }
         $loginUrl = $this->loginBaseUrl.'/'.$tenantId.'/oauth2/v2.0/token';
 
-        return OAuthConfig::make()
+        $config = OAuthConfig::make()
             ->setClientId(config('services.azure.client_id'))
             ->setClientSecret(config('services.azure.client_secret'))
             ->setTokenEndpoint($loginUrl)
             ->setDefaultScopes(['https://graph.microsoft.com/.default']);
+
+        if (method_exists($config, 'setAllowBaseUrlOverride')) {
+            $config->setAllowBaseUrlOverride();
+        }
+
+        return $config;
     }
 
     public function paginate(Request $request): Paginator
@@ -107,6 +114,8 @@ class GraphConnector extends Connector implements HasPagination
             protected function getPageItems(Response $response, Request $request): array
             {
                 // return (array)$response->json('value');
+                $dtoResult = null;
+
                 try {
                     $dtoResult = $response->dtoOrFail();
                 } catch (Throwable $e) {

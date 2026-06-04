@@ -2,15 +2,16 @@
 
 namespace ChrisReedIO\AzureGraph\Facades;
 
+use ChrisReedIO\AzureGraph\GraphConnector;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \ChrisReedIO\AzureGraph\GraphConnector
+ * @see GraphConnector
  */
 class AzureGraph extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \ChrisReedIO\AzureGraph\GraphConnector::class;
+        return GraphConnector::class;
     }
 }
